@@ -15,30 +15,58 @@ public class HevoHttpClient {
     private int page;
 
 
-    HevoHttpClient() {
+    HevoHttpClient(String REQ_TYPE, String URL) {
 
         /**
          *Hevo Client constructor to set some default or initial values of parameters.
+         * Used for GET and POST request.
          **/
-        page = -1;
         client = HttpClient.newHttpClient();
-        REQ_TYPE = "";
+        this.REQ_TYPE = REQ_TYPE;
+        this.URL = URL;
+        this.page = -1;
     }
+
+    HevoHttpClient(String REQ_TYPE, String URL, int page) {
+
+        /**
+         *Hevo Client constructor to set some default or initial values of parameters.
+         * Used for GET request
+         **/
+        client = HttpClient.newHttpClient();
+        this.REQ_TYPE = REQ_TYPE;
+        this.URL = URL;
+        this.page = page;
+    }
+
+
+    HevoHttpClient(String REQ_TYPE, String URL, String body) {
+
+        /**
+         *Hevo Client constructor to set some default or initial values of parameters.
+         * Used for POST & PUT request
+         **/
+        client = HttpClient.newHttpClient();
+        this.REQ_TYPE = REQ_TYPE;
+        this.URL = URL;
+        this.body = body;
+    }
+
 
     private String getReqHandler() throws IOException, InterruptedException {
         Get obj = new Get();
 
         if (this.page == -1) {
-            return obj.send(this.client, this.request, URL);
+            return obj.send(this.client, this.request, this.URL);
         }
 
-        return obj.send(this.client, this.request, URL, page);
+        return obj.send(this.client, this.request, this.URL, this.page);
 
     }
 
     private String postReqHandler() throws IOException, InterruptedException {
         Post obj = new Post();
-        return obj.send(this.client, this.request, URL, body);
+        return obj.send(this.client, this.request, this.URL, this.body);
     }
 
     private String putReqHandler() throws IOException, InterruptedException {
@@ -54,37 +82,6 @@ public class HevoHttpClient {
 
     public int getPage() {
         return page;
-    }
-
-    public void setPage(int page) {
-        /**
-         * Must be setted if user wants to search for a particular page of results.
-         * It's only used in case of GET request.
-         */
-        this.page = page;
-    }
-
-    public void setRequestType(String req) {
-        /**
-         * Set's the type of request user want's to create.
-         * It's a must for all types of request.
-         */
-        this.REQ_TYPE = req;
-    }
-
-    public void setUrl(String URL) {
-        /**
-         * Set the URL to send the request to.
-         * It's a must in all types of request.
-         */
-        this.URL = URL;
-    }
-
-    public void setBody(String body) {
-        /**
-         * Set the body of the request in case of POST Or PUT request.
-         */
-        this.body = body;
     }
 
 

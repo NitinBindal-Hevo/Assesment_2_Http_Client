@@ -12,20 +12,18 @@ import java.util.Scanner;
 
 public class Get {
 
-    private int page;
 
-    Get() {
-        page = 1;
-    }
 
 
     public String send(HttpClient client, HttpRequest request, String URL) throws IOException, InterruptedException {
+
+        int page=1;
 
         Scanner key = new Scanner(System.in);
         System.out.println("Press return for next page or q to exit ");
         String input = "";
 
-        String temp = URL + "?page=" + this.page;
+        String temp = URL + "?page=" + page;
         System.out.println("URL :  " + temp);
         char[] new_url = temp.toCharArray();
 
@@ -42,8 +40,8 @@ public class Get {
             System.out.println("Status :  " + response.statusCode());
             System.out.println(response.body());
             responses.add(response.body());
-            this.page += 1;
-            Array.setChar(new_url, size, (char) (this.page + '0'));
+            page += 1;
+            Array.setChar(new_url, size, (char) (page + '0'));
             input = key.nextLine();
 
         }
@@ -53,9 +51,8 @@ public class Get {
 
     public String send(HttpClient client, HttpRequest request, String URL, int page) throws IOException, InterruptedException {
 
-        this.page = page;
 
-        String temp = URL + "?page=" + this.page;
+        String temp = URL + "?page=" + page;
         char[] new_url = temp.toCharArray();
 
         request = HttpRequest.newBuilder()
