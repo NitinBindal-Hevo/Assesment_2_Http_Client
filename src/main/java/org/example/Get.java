@@ -13,11 +13,9 @@ import java.util.Scanner;
 public class Get {
 
 
-
-
     public String send(HttpClient client, HttpRequest request, String URL) throws IOException, InterruptedException {
-
-        int page=1;
+        System.out.println("Now entered!");
+        int page = 1;
 
         Scanner key = new Scanner(System.in);
         System.out.println("Press return for next page or q to exit ");
@@ -30,11 +28,7 @@ public class Get {
         List<String> responses = new ArrayList<>();
         int size = new_url.length - 1;
         while (!input.equalsIgnoreCase("q")) {
-            request = HttpRequest.newBuilder()
-                    .GET()
-                    .header("accept", "application/json")
-                    .uri(URI.create(String.valueOf(new_url)))
-                    .build();
+            request = HttpRequest.newBuilder().GET().header("accept", "application/json").uri(URI.create(String.valueOf(new_url))).build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println("Status :  " + response.statusCode());
@@ -55,16 +49,12 @@ public class Get {
         String temp = URL + "?page=" + page;
         char[] new_url = temp.toCharArray();
 
-        request = HttpRequest.newBuilder()
-                .GET()
-                .header("accept", "application/json")
-                .uri(URI.create(String.valueOf(new_url)))
-                .build();
+        request = HttpRequest.newBuilder().GET().header("accept", "application/json").uri(URI.create(String.valueOf(new_url))).build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println("Status :  " + response.statusCode());
         System.out.println(response.body());
-        return response.body();
+        return response.body().toString();
     }
 
 

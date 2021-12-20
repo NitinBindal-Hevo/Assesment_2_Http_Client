@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class HevoHttpClient {
 
@@ -53,30 +55,48 @@ public class HevoHttpClient {
     }
 
 
-    private String getReqHandler() throws IOException, InterruptedException {
+    private Object getReqHandler() throws IOException, InterruptedException {
         Get obj = new Get();
 
+        String res;
         if (this.page == -1) {
-            return obj.send(this.client, this.request, this.URL);
+
+            res = obj.send(this.client, this.request, this.URL);
         }
-
-        return obj.send(this.client, this.request, this.URL, this.page);
+        else
+        {
+            res = obj.send(this.client, this.request, this.URL, this.page);;
+        }
+        getObject res_obj = new getObject(res);
+        return res_obj;
 
     }
 
-    private String postReqHandler() throws IOException, InterruptedException {
+    private Object postReqHandler() throws IOException, InterruptedException {
         Post obj = new Post();
-        return obj.send(this.client, this.request, this.URL, this.body);
+        String res = obj.send(this.client, this.request, this.URL, this.body);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        postObject res_obj = objectMapper.readValue(res,postObject.class);
+        return res_obj;
+
     }
 
-    private String putReqHandler() throws IOException, InterruptedException {
+    private Object putReqHandler() throws IOException, InterruptedException {
         Put obj = new Put();
-        return obj.send(this.client, this.request, this.URL, this.body);
+        String res = obj.send(this.client, this.request, this.URL, this.body);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        putObject res_obj = objectMapper.readValue(res,putObject.class);
+        return res_obj;
+
     }
 
-    private String deleteReqHandler() throws IOException, InterruptedException {
+    private Object deleteReqHandler() throws IOException, InterruptedException {
         Delete obj = new Delete();
         obj.send(this.client, this.request, this.URL);
+//        return new Object();
+
         return null;
     }
 
@@ -85,7 +105,7 @@ public class HevoHttpClient {
     }
 
 
-    public String send() throws IOException, InterruptedException {
+    public Object send() throws IOException, InterruptedException {
         /**
          * Send function to be called only when all the parameters need to build a request is set.
          * This function primarily reponses to 4 types of request namely GET,POST,PUT,DELETE
