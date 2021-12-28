@@ -3,105 +3,81 @@ package org.example;
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-import java.util.List;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class HevoHttpClient {
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.deletePojo.deleteOutputObj;
+import org.example.getPojo.getInputObj;
+import org.example.getPojo.getOutputObj;
+import org.example.postPojo.postInputObj;
+import org.example.postPojo.postOutputObj;
+import org.example.putPojo.putInputObj;
+import org.example.putPojo.putOutputObj;
+import org.example.requests.Delete;
+import org.example.requests.Get;
+import org.example.requests.Post;
+import org.example.requests.Put;
+
+public class HevoHttpClient<T> {
 
     private String REQ_TYPE;
     private String URL;
-    private String body;
+    private T payload;
     private HttpClient client;
     private HttpRequest request;
-    private int page;
+    private ObjectMapper mapper;
 
+    public HevoHttpClient(String REQ_TYPE, String URL) {
+        /**
+         *Hevo Client constructor to set some default or initial values of parameters.
+         * Used for DELETE request
+         **/
 
-    HevoHttpClient(String REQ_TYPE, String URL) {
+        this.client = HttpClient.newHttpClient();
+        this.REQ_TYPE = REQ_TYPE;
+        this.URL = URL;
+    }
+
+    public HevoHttpClient(String REQ_TYPE, String URL, T payload) {
 
         /**
          *Hevo Client constructor to set some default or initial values of parameters.
-         * Used for GET and POST request.
+         * Used for GET, POST & PUT request
          **/
-        client = HttpClient.newHttpClient();
+        this.client = HttpClient.newHttpClient();
         this.REQ_TYPE = REQ_TYPE;
         this.URL = URL;
-        this.page = -1;
-    }
-
-    HevoHttpClient(String REQ_TYPE, String URL, int page) {
-
-        /**
-         *Hevo Client constructor to set some default or initial values of parameters.
-         * Used for GET request
-         **/
-        client = HttpClient.newHttpClient();
-        this.REQ_TYPE = REQ_TYPE;
-        this.URL = URL;
-        this.page = page;
+        this.payload = payload;
+        this.mapper = new ObjectMapper();
     }
 
 
-    HevoHttpClient(String REQ_TYPE, String URL, String body) {
-
-        /**
-         *Hevo Client constructor to set some default or initial values of parameters.
-         * Used for POST & PUT request
-         **/
-        client = HttpClient.newHttpClient();
-        this.REQ_TYPE = REQ_TYPE;
-        this.URL = URL;
-        this.body = body;
-    }
-
-
-    private Object getReqHandler() throws IOException, InterruptedException {
+    private getOutputObj getReqHandler() throws IOException, InterruptedException {
         Get obj = new Get();
+        int page = ((getInputObj) payload).getPage();
+        if (page == -1) {
 
-        String res;
-        if (this.page == -1) {
+            return obj.send(this.client, this.request, this.URL);
+        }
 
-            res = obj.send(this.client, this.request, this.URL);
-        }
-        else
-        {
-            res = obj.send(this.client, this.request, this.URL, this.page);;
-        }
-        getObject res_obj = new getObject(res);
-        return res_obj;
+        return obj.send(this.client, this.request, this.URL, page);
+
 
     }
 
-    private Object postReqHandler() throws IOException, InterruptedException {
+    private postOutputObj postReqHandler() throws IOException, InterruptedException {
         Post obj = new Post();
-        String res = obj.send(this.client, this.request, this.URL, this.body);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        postObject res_obj = objectMapper.readValue(res,postObject.class);
-        return res_obj;
-
+        return obj.send(this.client, this.request, this.URL, (postInputObj) this.payload);
     }
 
-    private Object putReqHandler() throws IOException, InterruptedException {
+    private putOutputObj putReqHandler() throws IOException, InterruptedException {
         Put obj = new Put();
-        String res = obj.send(this.client, this.request, this.URL, this.body);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        putObject res_obj = objectMapper.readValue(res,putObject.class);
-        return res_obj;
+        return obj.send(this.client, this.request, this.URL, (putInputObj) this.payload);
 
     }
 
-    private Object deleteReqHandler() throws IOException, InterruptedException {
+    private deleteOutputObj deleteReqHandler() throws IOException, InterruptedException {
         Delete obj = new Delete();
-        obj.send(this.client, this.request, this.URL);
-//        return new Object();
-
-        return null;
-    }
-
-    public int getPage() {
-        return page;
+        return obj.send(this.client, this.request, this.URL);
     }
 
 

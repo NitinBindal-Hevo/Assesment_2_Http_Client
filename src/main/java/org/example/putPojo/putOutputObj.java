@@ -1,16 +1,16 @@
-package org.example;
+package org.example.putPojo;
 
-public class putObject {
+public class putOutputObj {
 
     private String name;
     private String job;
     private String updatedAt;
 
-    public putObject() {
+    public putOutputObj() {
 
     }
 
-    public putObject(String name, String job, String updatedAt) {
+    public putOutputObj(String name, String job, String updatedAt) {
         this.name = name;
         this.job = job;
         this.updatedAt = updatedAt;
@@ -26,5 +26,10 @@ public class putObject {
 
     public String getUpdatedAt() {
         return updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Name :  " + this.name + "\nJob :  " + this.job + "\nUpdatedAt :  " + this.updatedAt;
     }
 }

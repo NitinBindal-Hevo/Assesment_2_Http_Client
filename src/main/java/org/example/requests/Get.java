@@ -1,4 +1,7 @@
-package org.example;
+package org.example.requests;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.getPojo.getOutputObj;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -12,8 +15,13 @@ import java.util.Scanner;
 
 public class Get {
 
+    private ObjectMapper mapper;
 
-    public String send(HttpClient client, HttpRequest request, String URL) throws IOException, InterruptedException {
+    public Get() {
+        mapper = new ObjectMapper();
+    }
+
+    public getOutputObj send(HttpClient client, HttpRequest request, String URL) throws IOException, InterruptedException {
         System.out.println("Now entered!");
         int page = 1;
 
@@ -39,11 +47,12 @@ public class Get {
             input = key.nextLine();
 
         }
-        return responses.toString();
+
+        return mapper.readValue(responses.get(responses.size() - 1), getOutputObj.class);
 
     }
 
-    public String send(HttpClient client, HttpRequest request, String URL, int page) throws IOException, InterruptedException {
+    public getOutputObj send(HttpClient client, HttpRequest request, String URL, int page) throws IOException, InterruptedException {
 
 
         String temp = URL + "?page=" + page;
@@ -54,7 +63,10 @@ public class Get {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println("Status :  " + response.statusCode());
         System.out.println(response.body());
-        return response.body().toString();
+
+        return mapper.readValue(response.body().toString(), getOutputObj.class);
+
+
     }
 
 
