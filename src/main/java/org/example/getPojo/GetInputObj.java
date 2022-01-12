@@ -1,14 +1,14 @@
 package org.example.getPojo;
 
-public class getInputObj {
+public class GetInputObj {
 
     private int page;
 
-    public getInputObj() {
+    public GetInputObj() {
         this.page = -1;
     }
 
-    public getInputObj(int page) {
+    public GetInputObj(int page) {
         this.page = page;
     }
 

@@ -9,7 +9,7 @@ public class GetOutputObj {
     private String per_page;
     private String total;
     private String total_pages;
-    private getDataObj[] data;
+    private GetDataObj[] data;
     private GetSupportObj support;
     private ObjectMapper mapper;
 
@@ -23,7 +23,7 @@ public class GetOutputObj {
         this.total = total;
         this.total_pages = total_pages;
         this.mapper = new ObjectMapper();
-        this.data = mapper.readValue(data, getDataObj[].class);
+        this.data = mapper.readValue(data, GetDataObj[].class);
         this.support = mapper.readValue(support, GetSupportObj.class);
     }
 
@@ -43,7 +43,7 @@ public class GetOutputObj {
         return total_pages;
     }
 
-    public getDataObj[] getData() {
+    public GetDataObj[] getData() {
         return data;
     }
 

@@ -1,16 +1,16 @@
 package org.example.putPojo;
 
-public class putOutputObj {
+public class PutOutputObj {
 
     private String name;
     private String job;
     private String updatedAt;
 
-    public putOutputObj() {
+    public PutOutputObj() {
 
     }
 
-    public putOutputObj(String name, String job, String updatedAt) {
+    public PutOutputObj(String name, String job, String updatedAt) {
         this.name = name;
         this.job = job;
         this.updatedAt = updatedAt;

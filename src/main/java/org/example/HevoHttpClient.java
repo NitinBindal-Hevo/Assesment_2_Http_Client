@@ -6,12 +6,12 @@ import java.net.http.HttpRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.deletePojo.DeleteOutputObj;
-import org.example.getPojo.getInputObj;
+import org.example.getPojo.GetInputObj;
 import org.example.getPojo.GetOutputObj;
 import org.example.postPojo.PostInputObj;
 import org.example.postPojo.PostOutputObj;
 import org.example.putPojo.PutInputObj;
-import org.example.putPojo.putOutputObj;
+import org.example.putPojo.PutOutputObj;
 import org.example.requests.Delete;
 import org.example.requests.Get;
 import org.example.requests.Post;
@@ -53,7 +53,7 @@ public class HevoHttpClient<T> {
 
     private GetOutputObj getReqHandler() throws IOException, InterruptedException {
         Get obj = new Get();
-        int page = ((getInputObj) payload).getPage();
+        int page = ((GetInputObj) payload).getPage();
         if (page == -1) {
 
             return obj.send(this.client, this.request, this.URL);
@@ -69,7 +69,7 @@ public class HevoHttpClient<T> {
         return obj.send(this.client, this.request, this.URL, (PostInputObj) this.payload);
     }
 
-    private putOutputObj putReqHandler() throws IOException, InterruptedException {
+    private PutOutputObj putReqHandler() throws IOException, InterruptedException {
         Put obj = new Put();
         return obj.send(this.client, this.request, this.URL, (PutInputObj) this.payload);
 

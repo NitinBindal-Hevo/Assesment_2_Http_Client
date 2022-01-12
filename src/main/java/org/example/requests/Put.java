@@ -2,7 +2,7 @@ package org.example.requests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.putPojo.PutInputObj;
-import org.example.putPojo.putOutputObj;
+import org.example.putPojo.PutOutputObj;
 
 import java.io.IOException;
 import java.net.URI;
@@ -19,7 +19,7 @@ public class Put {
         mapper = new ObjectMapper();
     }
 
-    public putOutputObj send(HttpClient client, HttpRequest request, String URL, PutInputObj payload) throws IOException, InterruptedException {
+    public PutOutputObj send(HttpClient client, HttpRequest request, String URL, PutInputObj payload) throws IOException, InterruptedException {
 
         String body = mapper.writeValueAsString(payload);
         request = HttpRequest.newBuilder()
@@ -31,7 +31,7 @@ public class Put {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         System.out.println("Status :  " + response.statusCode());
-        putOutputObj res_obj = mapper.readValue(response.body(), putOutputObj.class);
+        PutOutputObj res_obj = mapper.readValue(response.body(), PutOutputObj.class);
 
         return res_obj;
     }
