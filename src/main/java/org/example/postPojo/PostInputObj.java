@@ -1,15 +1,15 @@
 package org.example.postPojo;
 
-public class postInputObj {
+public class PostInputObj {
 
     String name;
     String job;
 
-    public postInputObj() {
+    public PostInputObj() {
 
     }
 
-    public postInputObj(String name, String job) {
+    public PostInputObj(String name, String job) {
         this.name = name;
         this.job = job;
     }

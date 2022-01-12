@@ -1,14 +1,14 @@
 package org.example.deletePojo;
 
-public class deleteOutputObj {
+public class DeleteOutputObj {
 
     private int statusCode;
 
-    deleteOutputObj() {
+    DeleteOutputObj() {
 
     }
 
-    public deleteOutputObj(int status) {
+    public DeleteOutputObj(int status) {
         this.statusCode = status;
     }
 

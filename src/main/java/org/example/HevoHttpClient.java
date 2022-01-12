@@ -5,12 +5,12 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.deletePojo.deleteOutputObj;
+import org.example.deletePojo.DeleteOutputObj;
 import org.example.getPojo.getInputObj;
-import org.example.getPojo.getOutputObj;
-import org.example.postPojo.postInputObj;
-import org.example.postPojo.postOutputObj;
-import org.example.putPojo.putInputObj;
+import org.example.getPojo.GetOutputObj;
+import org.example.postPojo.PostInputObj;
+import org.example.postPojo.PostOutputObj;
+import org.example.putPojo.PutInputObj;
 import org.example.putPojo.putOutputObj;
 import org.example.requests.Delete;
 import org.example.requests.Get;
@@ -51,7 +51,7 @@ public class HevoHttpClient<T> {
     }
 
 
-    private getOutputObj getReqHandler() throws IOException, InterruptedException {
+    private GetOutputObj getReqHandler() throws IOException, InterruptedException {
         Get obj = new Get();
         int page = ((getInputObj) payload).getPage();
         if (page == -1) {
@@ -64,18 +64,18 @@ public class HevoHttpClient<T> {
 
     }
 
-    private postOutputObj postReqHandler() throws IOException, InterruptedException {
+    private PostOutputObj postReqHandler() throws IOException, InterruptedException {
         Post obj = new Post();
-        return obj.send(this.client, this.request, this.URL, (postInputObj) this.payload);
+        return obj.send(this.client, this.request, this.URL, (PostInputObj) this.payload);
     }
 
     private putOutputObj putReqHandler() throws IOException, InterruptedException {
         Put obj = new Put();
-        return obj.send(this.client, this.request, this.URL, (putInputObj) this.payload);
+        return obj.send(this.client, this.request, this.URL, (PutInputObj) this.payload);
 
     }
 
-    private deleteOutputObj deleteReqHandler() throws IOException, InterruptedException {
+    private DeleteOutputObj deleteReqHandler() throws IOException, InterruptedException {
         Delete obj = new Delete();
         return obj.send(this.client, this.request, this.URL);
     }

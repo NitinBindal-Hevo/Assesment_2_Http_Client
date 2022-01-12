@@ -1,8 +1,8 @@
 package org.example.requests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.postPojo.postInputObj;
-import org.example.postPojo.postOutputObj;
+import org.example.postPojo.PostInputObj;
+import org.example.postPojo.PostOutputObj;
 
 import java.io.IOException;
 import java.net.URI;
@@ -18,7 +18,7 @@ public class Post {
         mapper = new ObjectMapper();
     }
 
-    public postOutputObj send(HttpClient client, HttpRequest request, String URL, postInputObj payload) throws IOException, InterruptedException {
+    public PostOutputObj send(HttpClient client, HttpRequest request, String URL, PostInputObj payload) throws IOException, InterruptedException {
 
 
         String body = mapper.writeValueAsString(payload);
@@ -31,7 +31,7 @@ public class Post {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         System.out.println("Status :  " + response.statusCode());
-        postOutputObj res_obj = mapper.readValue(response.body(), postOutputObj.class);
+        PostOutputObj res_obj = mapper.readValue(response.body(), PostOutputObj.class);
 
         return res_obj;
     }

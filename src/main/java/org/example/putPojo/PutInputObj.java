@@ -1,15 +1,15 @@
 package org.example.putPojo;
 
-public class putInputObj {
+public class PutInputObj {
 
     private String name;
     private String job;
 
-    public putInputObj() {
+    public PutInputObj() {
 
     }
 
-    public putInputObj(String name, String job) {
+    public PutInputObj(String name, String job) {
         this.name = name;
         this.job = job;
     }

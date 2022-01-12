@@ -1,15 +1,15 @@
 package org.example.getPojo;
 
-public class getSupportObj {
+public class GetSupportObj {
 
     private String url;
     private String text;
 
-    public getSupportObj() {
+    public GetSupportObj() {
 
     }
 
-    public getSupportObj(String url, String text) {
+    public GetSupportObj(String url, String text) {
         this.url = url;
         this.text = text;
     }

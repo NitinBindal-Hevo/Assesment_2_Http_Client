@@ -1,7 +1,7 @@
 package org.example.postPojo;
 
 
-public class postOutputObj {
+public class PostOutputObj {
 
     private String name;
     private String job;
@@ -9,11 +9,11 @@ public class postOutputObj {
     public String createdAt;
 
 
-    public postOutputObj() {
+    public PostOutputObj() {
 
     }
 
-    public postOutputObj(String name, String job, String id, String createdAt) {
+    public PostOutputObj(String name, String job, String id, String createdAt) {
         this.name = name;
         this.job = job;
         this.id = id;
